@@ -1,0 +1,297 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "LinkedIn Profile Schema",
+    "description": "Schema for scraped LinkedIn profile data, allowing for missing values to be represented as null.",
+    "type": "object",
+    "properties": {
+        "name": {
+            "type": "string",
+            "description": "The full name of the LinkedIn profile owner."
+        },
+        "headline": {
+            "type": "string",
+            "description": "The professional headline from the LinkedIn profile."
+        },
+        "location": {
+            "type": ["string", "null"],
+            "description": "The primary geographical location of the profile owner, or null if not specified."
+        },
+        "currentPosition": {
+            "type": ["object", "null"],
+            "description": "The current primary position held by the profile owner, or null if not specified.",
+            "properties": {
+                "title": {
+                    "type": "string",
+                    "description": "Title of the current position."
+                },
+                "company": {
+                    "type": "string",
+                    "description": "Company where the current position is held."
+                },
+                "location": {
+                    "type": ["string", "null"],
+                    "description": "Geographical location of the current position."
+                },
+                "startDate": {
+                    "type": "string",
+                    "description": "Start date of the current position (e.g., 'Jun 2023', '2025')."
+                },
+                "endDate": {
+                    "type": ["string", "null"],
+                    "description": "End date of the current position (should be null for current positions, or a specific date string if an end date is applicable). 'Present' in raw data should be mapped to null."
+                }
+            },
+            "required": ["title", "company", "startDate"],
+            "additionalProperties": false
+        },
+        "previousPositions": {
+            "type": ["array", "null"],
+            "description": "A list of previous positions held by the profile owner, or null if none.",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "description": "Title of the previous position."
+                    },
+                    "company": {
+                        "type": ["string", "null"],
+                        "description": "Company where the previous position was held."
+                    },
+                    "location": {
+                        "type": ["string", "null"],
+                        "description": "Geographical location of the previous position."
+                    },
+                    "startDate": {
+                        "type": "string",
+                        "description": "Start date of the previous position (e.g., 'Dec 2020')."
+                    },
+                    "endDate": {
+                        "type": ["string", "null"],
+                        "description": "End date of the previous position (e.g., 'May 2023'). Can be null if data is missing or if the position was ongoing (though less common for previous positions, or if it's an additional current role)."
+                    }
+                },
+                "required": ["title", "startDate"],
+                "additionalProperties": false
+            }
+        },
+        "education": {
+            "type": ["array", "null"],
+            "description": "A list of educational background entries for the profile owner, or null if none.",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "degree": {
+                        "type": ["string", "null"],
+                        "description": "Degree obtained (e.g., 'Bachelor of Engineering')."
+                    },
+                    "university": {
+                        "type": ["string", "null"],
+                        "description": "University or institution attended."
+                    },
+                    "fieldOfStudy": {
+                        "type": ["string", "null"],
+                        "description": "Field of study (e.g., 'Electrical and Electronics Engineering')."
+                    },
+                    "startDate": {
+                        "type": ["string", "null"],
+                        "description": "Start year or date of education (e.g., '2015', 'Sep 2020')."
+                    },
+                    "endDate": {
+                        "type": ["string", "null"],
+                        "description": "End year or date of education (e.g., '2019', 'Aug 2024')."
+                    },
+                    "grades": {
+                        "type": ["object", "null"],
+                        "description": "Specific grades or scores for courses, if available. Keys are course names, values are numeric grades.",
+                        "patternProperties": {
+                            ".*": { "type": "number" }
+                        },
+                        "additionalProperties": false
+                    },
+                    "overallGrade": {
+                        "type": ["string", "null"],
+                        "description": "Overall grade or GPA, often as a descriptive string (e.g., '82.87 (Distinction or First Class)', '8.28')."
+                    }
+                },
+                "additionalProperties": false
+            }
+        },
+        "skills": {
+            "type": "array",
+            "description": "A list of professional skills, can be empty if none.",
+            "items": {
+                "type": "string"
+            }
+        },
+        "summary": {
+            "type": ["string", "null"],
+            "description": "A summary or 'About' section from the profile, or null if not provided."
+        },
+        "contactInformation": {
+            "type": ["object", "null"],
+            "description": "Contact details of the profile owner, if available, or null if none.",
+            "properties": {
+                "email": {
+                    "type": ["string", "null"],
+                    "format": "email",
+                    "description": "Email address."
+                },
+                "linkedinUrl": {
+                    "type": ["string", "null"],
+                    "format": "uri",
+                    "description": "LinkedIn profile URL."
+                },
+                "otherUrl": {
+                    "type": ["string", "null"],
+                    "format": "uri",
+                    "description": "Any other relevant URL (e.g., personal website, blog, YouTube channel link)."
+                },
+                "portfolioLink": {
+                    "type": ["string", "null"],
+                    "format": "uri",
+                    "description": "Link to a professional portfolio."
+                }
+            },
+            "additionalProperties": false
+        },
+        "licensesAndCertifications": {
+            "type": ["array", "null"],
+            "description": "A list of licenses and certifications obtained by the profile owner, or null if none.",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Name of the license or certification."
+                    },
+                    "issuer": {
+                        "type": "string",
+                        "description": "Issuing organization for the license or certification."
+                    },
+                    "dateIssued": {
+                        "type": ["string", "null"],
+                        "description": "Date the license or certification was issued (e.g., 'Feb 2023'). Use this field."
+                    },
+                    "credentialID": {
+                        "type": ["string", "null"],
+                        "description": "ID of the credential, if available."
+                    }
+                },
+                "required": ["name", "issuer"],
+                "additionalProperties": false
+            }
+        },
+        "publications": {
+            "type": ["array", "null"],
+            "description": "A list of publications by the profile owner, or null if none.",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "description": "Title of the publication."
+                    },
+                    "publisher": {
+                        "type": ["string", "null"],
+                        "description": "Publisher of the publication."
+                    },
+                    "journal": {
+                        "type": ["string", "null"],
+                        "description": "Journal in which the publication appeared."
+                    },
+                    "date": {
+                        "type": ["string", "null"],
+                        "description": "Publication date (e.g., 'Feb 14, 2020')."
+                    },
+                    "abstract": {
+                        "type": ["string", "null"],
+                        "description": "Abstract of the publication."
+                    },
+                    "url": {
+                        "type": ["string", "null"],
+                        "format": "uri",
+                        "description": "URL to the publication."
+                    }
+                },
+                "required": ["title"],
+                "additionalProperties": false
+            }
+        },
+        "honorsAndAwards": {
+            "type": ["array", "null"],
+            "description": "A list of honors and awards received by the profile owner, or null if none.",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Name of the honor or award."
+                    },
+                    "issuer": {
+                        "type": ["string", "null"],
+                        "description": "Organization that issued the honor or award."
+                    },
+                    "date": {
+                        "type": ["string", "null"],
+                        "description": "Date the honor or award was received (e.g., 'Apr 2023')."
+                    }
+                },
+                "required": ["name"],
+                "additionalProperties": false
+            }
+        },
+        "projects": {
+            "type": ["array", "null"],
+            "description": "A list of projects undertaken by the profile owner, or null if none.",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Name of the project."
+                    },
+                    "associatedWith": {
+                        "type": ["string", "null"],
+                        "description": "Company or organization associated with the project."
+                    },
+                    "description": {
+                        "type": ["string", "null"],
+                        "description": "Description of the project."
+                    },
+                    "startDate": {
+                        "type": ["string", "null"],
+                        "description": "Start date of the project (e.g., 'Apr 2025')."
+                    },
+                    "endDate": {
+                        "type": ["string", "null"],
+                        "description": "End date of the project (e.g., 'Oct 2024', or null if ongoing)."
+                    }
+                },
+                "required": ["name"],
+                "additionalProperties": false
+            }
+        },
+        "languages": {
+            "type": ["array", "null"],
+            "description": "A list of languages known by the profile owner, or null if none.",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "language": {
+                        "type": "string",
+                        "description": "Name of the language."
+                    },
+                    "proficiency": {
+                        "type": ["string", "null"],
+                        "description": "Proficiency level in the language (e.g., 'Native or bilingual proficiency', 'Full professional proficiency')."
+                    }
+                },
+                "required": ["language"],
+                "additionalProperties": false
+            }
+        }
+    },
+    "required": ["name", "headline", "location", "currentPosition", "previousPositions", "education", "skills", "summary"],
+    "additionalProperties": false
+}

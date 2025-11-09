@@ -1,0 +1,43 @@
+{
+  "linkedin": {
+    "usernames": [
+      "linkedinscrap1@example.com",
+      "linkedinscrap2@example.com"
+    ],
+    "password": "linked_in_password"
+  },
+  "ai": {
+    "maxTokens": 131072,
+    "temperature": 0.1,
+    "stream": false
+  },
+  "selenium": {
+    "chromeDriverPath": "define-your-path-to-chromedriver",
+    "chromeUserDataDir": "path-to-your-Chrome_Data",
+    "remoteDebuggingPort": 8000
+  },
+  "googleSearch": {
+    "queryBase": "site:linkedin.com%2Fin%20{post}"
+  },
+  "searchParameters": {
+    "postQuery": "data scientist",
+    "numResults": 20
+  },
+    "concurrency": {
+    "batchSize": 5,
+    "aiRateLimitPerMinute": 50
+  },
+  "paths": {
+    "profileIdsDir": "profile_ids",
+    "profileTxtDir": "profile_txt",
+    "profilesJsonDir": "profiles_json"
+  },
+  "delays": {
+    "short_min": 1,
+    "short_max": 3,
+    "medium_min": 3,
+    "medium_max": 7,
+    "long_min": 7,
+    "long_max": 10
+  }
+}
