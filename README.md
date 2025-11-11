@@ -4,7 +4,8 @@
 This project is deployed on Netflify (Frontend) and Azure Web Apps (Backend):
 - Web UI: https://al-jd-blog-gen.netlify.app
 - Swagger Docs: https://al-jd-blog-gen.azurewebsites.net/docs
-
+> [!NOTE]
+> First try visit the Swagger Docs page. If the page does not load, it means there are some issues from the Azure side due to free tier subscription limitations. In such cases, consider [Docker](https://github.com/SimpNick6703/AL-JD/tree/blog-generator?tab=readme-ov-file#docker) version with your environment variables.
 AI Blog Generator uses:
 - Frontend: React + TypeScript + Vite + Tailwind CSS
 - Backend: FastAPI (Python) using the OpenAI Python SDK
