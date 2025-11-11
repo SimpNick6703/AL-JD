@@ -1,7 +1,0 @@
-# Ignore Python files - backend is deployed separately to Azure
-requirements.txt
-server/
-*.py
-__pycache__/
-*.pyc
-.env

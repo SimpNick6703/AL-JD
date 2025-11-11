@@ -1,11 +1,9 @@
 [build]
   publish = "dist"
-  command = "npm run build"
+  command = "bash netlify-build.sh"
 
 [build.environment]
   NODE_VERSION = "20"
-  # Skip Python dependency installation
-  NETLIFY_SKIP_PYTHON_INSTALL = "true"
 
 [[redirects]]
   from = "/*"
