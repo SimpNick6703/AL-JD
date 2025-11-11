@@ -1,0 +1,5 @@
+{
+  "name": "AI Blog Generator",
+  "description": "An AI-powered application to generate, view, and edit programming articles. Users can get random tips or provide a topic to generate detailed blog-worthy content.",
+  "requestFramePermissions": []
+}
